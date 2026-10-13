@@ -1,0 +1,18 @@
+package com.labricardomurillo.lab1.repository;
+
+import com.labricardomurillo.lab1.model.Producto;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface ProductoRepository extends JpaRepository<Producto,Long> {
+    @Override
+    @EntityGraph(attributePaths = "categorias")
+    List<Producto> findAll();
+
+    @Override
+    @EntityGraph(attributePaths = "categorias")
+    Optional<Producto> findById(Long id);
+}

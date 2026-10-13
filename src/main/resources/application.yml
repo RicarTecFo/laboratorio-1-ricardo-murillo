@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: lab-1
+
+  datasource:
+    url: jbdc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  security:
+    oath2:
+      resourceserver:
+        jwt:
+          issuer-uri: por_definir
