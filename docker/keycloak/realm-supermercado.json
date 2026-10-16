@@ -1,0 +1,80 @@
+{
+  "realm": "supermercado",
+  "enabled": true,
+  "sslRequired": "none",
+  "accessTokenLifespan": 900,
+  "registrationAllowed": false,
+  "roles": {
+    "realm": [
+      {
+        "name": "SUPER-ADMIN-ROLE",
+        "description": "Administrador: Acceso a todas las funciones.",
+        "composite": true,
+        "composites": {
+          "client": {
+            "persistencia-api": ["producto:leer", "producto:escribir", "producto:eliminar", "categoria:leer", "categoria:escribir", "categoria:eliminar"]
+            }
+          }
+      },
+      {
+        "name": "USER",
+        "description": "Usuario regular: Solo puede consultar productos y categorías.",
+        "composite": true,
+        "composites": {
+          "client": {
+            "persistencia-api": [
+              "producto:leer",
+              "categoria:leer"
+              ]
+          }
+        }
+      }
+    ],
+    "client": {
+      "persistencia-api": [
+        { "name":  "producto:leer", "description":  "Consultar productos." },
+        { "name":  "producto:escribir", "description":  "Crear y actualizar productos." },
+        { "name":  "producto:eliminar", "description":  "Eliminar productos." },
+        { "name":  "categoria:leer", "description":  "Consultar categoria." },
+        { "name":  "categoria:escribir", "description":  "Crear y actualizar categorías." },
+        { "name":  "categoria:eliminar", "description":  "Eliminar categorías." }
+      ]
+    }
+  },
+  "clients": [
+    {
+      "clientId":"persistencia-api",
+      "name": "API del lab 1.",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "redirectUris": ["http://localhost:*", "https://oauth.pstmn.io/v1/callback"],
+      "webOrigins": ["+"],
+      "fullScopeAllowed": true
+    }
+  ],
+  "users": [
+    {
+      "username": "Gino_Marin",
+      "enabled": true,
+      "email": "gino@adminteam.supermercado",
+      "emailVerified": true,
+      "firstName": "Gino",
+      "lastName": "Admin",
+      "credentials": [{ "type": "password", "value": "gino123", "temporary": false }],
+      "realmRoles": ["SUPER-ADMIN-ROLE"]
+    },
+    {
+      "username": "Gino_Marin_User",
+      "enabled": true,
+      "email": "gino@email.com",
+      "emailVerified": true,
+      "firstName": "Gino",
+      "lastName": "User",
+      "credentials": [{ "type": "password", "value": "ginoUser", "temporary": false }],
+      "realmRoles": ["USER"]
+    }
+  ]
+
+}

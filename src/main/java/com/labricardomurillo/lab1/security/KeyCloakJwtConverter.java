@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class KeycloakJwtConverter implements Converter<Jwt, AbstractAuthenticationToken> {
+public class KeyCloakJwtConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
     private final String clientId;
 
-    public KeycloakJwtConverter(String clientId) {
+    public KeyCloakJwtConverter(String clientId) {
         this.clientId = clientId;
     }
 

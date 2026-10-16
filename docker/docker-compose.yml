@@ -11,14 +11,40 @@ services:
     image: postgres:16-alpine3.23
     container_name: postgres_db_lab1
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres-lab
+      POSTGRES_PASSWORD: postgres-lab
+      POSTGRES_DB: postgres-lab
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres-lab -d postgres-lab"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4
+    container_name: keycloak
+    entrypoint: ["/bin/bash","/opt/keycloak/start.sh"]
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/postgres-lab
+      KC_DB_USERNAME: postgres-lab
+      KC_DB_PASSWORD: postgres-lab
+      KC_DB_SCHEMA: keycloak_schema
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    ports:
+      - "8180:8080"
+    volumes:
+      - ./keycloak/realm-supermercado.json:/opt/keycloak/data/import/realm-supermercado.json:ro
+      - ./keycloak/start.sh:/opt/keycloak/start.sh:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
 volumes:
   postgres_data:
   redis_data:

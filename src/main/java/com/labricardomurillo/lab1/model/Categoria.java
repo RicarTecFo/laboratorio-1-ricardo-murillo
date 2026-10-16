@@ -21,6 +21,6 @@ public class Categoria {
     @Column
     private String descripcion;
 
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoria")
     private Set<Producto> productos = new HashSet<>();
 }
