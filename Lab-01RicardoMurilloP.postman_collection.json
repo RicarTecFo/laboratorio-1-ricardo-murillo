@@ -1,0 +1,1339 @@
+{
+  "info": {
+    "_exporter_id": "42935825",
+    "_postman_id": "d8870f9d-8173-4818-845b-b56f18176322",
+    "name": "Lab-01",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "item": [
+        {
+          "name": "Login Admin",
+          "request": {
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\r\n    \"username\": \"Gino_Marin\",\r\n    \"password\": \"gino123\"\r\n}"
+            },
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ],
+              "raw": "{{baseUrl}}/api/v1/auth/login?="
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login user",
+          "request": {
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\r\n    \"username\": \"Gino_Marin_User\",\r\n    \"password\": \"ginoUser\"\r\n}"
+            },
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ],
+              "raw": "{{baseUrl}}/api/v1/auth/login?="
+            }
+          },
+          "response": []
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Login fallido con credenciales incorrectas.\", function () {\n    pm.response.to.have.status(401);\n});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Credenciales Incorrectas",
+          "request": {
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\r\n    \"username\": \"Gino_Marin_User\",\r\n    \"password\": \"ginoUserrrr\"\r\n}"
+            },
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ],
+              "raw": "{{baseUrl}}/api/v1/auth/login?="
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Acceso sin autenticación (productos)",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Acceso sin autenticación (categorías)",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Token inválido",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{auth_secret_0flz}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\r\n    \"username\": \"Gino_Marin\",\r\n    \"password\": \"gino123\"\r\n}"
+            },
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ],
+              "raw": "{{baseUrl}}/api/v1/auth/login"
+            }
+          },
+          "response": []
+        }
+      ],
+      "name": "Autenticación"
+    },
+    {
+      "auth": {
+        "bearer": [
+          {
+            "key": "token",
+            "type": "string",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "type": "bearer"
+      },
+      "item": [
+        {
+          "item": [
+            {
+              "name": "Consultar categoría inexistente",
+              "request": {
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "100"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/100"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Actualizar categoría inexistente",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Arroz dorado\",\r\n  \"descripcion\": \"Arroz... ¡pero dorado!\",\r\n  \"precio\": 15000000,\r\n  \"cantidad\": 1,\r\n  \"categoria\": {\r\n    \"id\": 1\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "producto",
+                    "100"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/producto/100"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Eliminar categoría inexistente",
+              "request": {
+                "header": [],
+                "method": "DELETE",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "100"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/100"
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Categoría error"
+        },
+        {
+          "item": [
+            {
+              "name": "Listar categorías",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLcmZNWUw2UmZnSE5lZ0ZWdHdyRGZxZ0FoZFlDTTVFZmFoYnJVYjgwcE5FIn0.eyJleHAiOjE3OTIxMjM0MTIsImlhdCI6MTc5MjEyMjUxMiwianRpIjoib25ydHJvOjUwOWVjMWY4LTMxYjEtOWZhMi1iY2MxLThkYzQ5OTIzZmMyZiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODE4MC9yZWFsbXMvc3VwZXJtZXJjYWRvIiwic3ViIjoiMzNhZDIxYmUtYTY0Zi00NWY1LTkxNGYtMTM5NTE2MTI0MmU3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoicGVyc2lzdGVuY2lhLWFwaSIsInNpZCI6ImE5MmVlZTlkLTI0MDItNDQ2Ni0wZGZlLTljNjViZTM3ZDY2MSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDoqIiwiaHR0cHM6Ly9vYXV0aC5wc3Rtbi5pbyJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiU1VQRVItQURNSU4tUk9MRSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InBlcnNpc3RlbmNpYS1hcGkiOnsicm9sZXMiOlsicHJvZHVjdG86bGVlciIsImNhdGVnb3JpYTplc2NyaWJpciIsImNhdGVnb3JpYTpsZWVyIiwiY2F0ZWdvcmlhOmVsaW1pbmFyIiwicHJvZHVjdG86ZWxpbWluYXIiLCJwcm9kdWN0bzplc2NyaWJpciJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiR2lubyBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6Imdpbm9fbWFyaW4iLCJnaXZlbl9uYW1lIjoiR2lubyIsImZhbWlseV9uYW1lIjoiQWRtaW4iLCJlbWFpbCI6Imdpbm9AYWRtaW50ZWFtLnN1cGVybWVyY2FkbyJ9.HwjmviblHIcP6Y5aix_6OsXfCfYm2i5ce9Y5sbbjCJ8ien_XoBFwGdCytnIsnfNAID1uF7QH97WgI-cNnEF0j4mt__H3-iNJoOT8sR7WqymrpEnYPCupAksbvRdDL_N_-tupZINvKmcR-N5oW99jHdpSlngw0W4XaWhMbmpHC6kDV8dc8SpwHbZvuVw8uVmtGe99GnfCytLePL9sckpIK7GFtjPGcGHy2d-qrU3pKMUChdLjWm19iQcHeIFP5C-kX9E0-71GCsZRPUaQ6C89lcCdhQxiaUGO0bcBnd14S3OjGWb9376Kc8eZWuKiYR0mLHvH4ZqPhBAPRfr6vP9TgQ\"\r\n}"
+                },
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria"
+                }
+              },
+              "response": []
+            },
+            {
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "name": "Consultar categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": ""
+                },
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    "1"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/1"
+                }
+              },
+              "response": []
+            },
+            {
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Categoría creada\", () => {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\nif (pm.response.code === 201) {\r\n    pm.collectionVariables.set(\r\n        \"categoriaId\",\r\n        pm.response.json().id\r\n    );\r\n}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "name": "Crear categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Granos\",\r\n  \"descripcion\": \"Arroz, frijoles y otros granos\"\r\n}"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    ""
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/"
+                }
+              },
+              "response": []
+            },
+            {
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Categoría creada\", () => {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\nif (pm.response.code === 201) {\r\n    pm.collectionVariables.set(\r\n        \"otraCategoriaId\",\r\n        pm.response.json().id\r\n    );\r\n}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "name": "Crear una segunda categoría (necesario para la carpeta Reasignación)",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Cereales\",\r\n  \"descripcion\": \"Granos de cereal\"\r\n}"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    ""
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Actualizar categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n    \"nombre\": \"Lacteos\",\r\n    \"descripcion\": \"Actualizado\"\r\n}"
+                },
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    "1"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/1"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Eliminar categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n    \"nombre\": \"Lacteos\",\r\n    \"descripcion\": \"Productos derivados de la leche\"\r\n}"
+                },
+                "header": [],
+                "method": "DELETE",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    "2"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/2"
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Categoría"
+        },
+        {
+          "item": [
+            {
+              "name": "Listar productos",
+              "request": {
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Consultar productos",
+              "request": {
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Producto creado\", () => {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\nif (pm.response.code === 201) {\r\n    pm.collectionVariables.set(\r\n        \"productoId\",\r\n        pm.response.json().id\r\n    );\r\n}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "name": "Crear producto",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Arroz\",\r\n  \"descripcion\": \"Bolsa de un kilogramo\",\r\n  \"precio\": 1500,\r\n  \"cantidad\": 20,\r\n  \"categoria\": {\r\n    \"id\": 1\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    ""
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Actualizar producto",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Arroz premium (por decir algo)\",\r\n  \"descripcion\": \"Actualizado\",\r\n  \"precio\": 1800,\r\n  \"cantidad\": 35,\r\n  \"categoria\": {\r\n    \"id\": 1\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "1"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/1"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Eliminar producto",
+              "request": {
+                "header": [],
+                "method": "DELETE",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "1"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/1"
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Producto"
+        },
+        {
+          "item": [
+            {
+              "name": "Consultar producto inexistente",
+              "request": {
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "100"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/100"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Crear producto con categoría inexistente",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Frijoles\",\r\n  \"descripcion\": \"Bolsa de umedio kilogramo\",\r\n  \"precio\": 1200,\r\n  \"cantidad\": 20,\r\n  \"categoria\": {\r\n    \"id\": 10000\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    ""
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Crear producto sin atributo categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Frijoles\",\r\n  \"descripcion\": \"Bolsa de umedio kilogramo\",\r\n  \"precio\": 1200,\r\n  \"cantidad\": 20,\r\n  \"categoria\": {\r\n    \"id\": 10000\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    ""
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Crear producto con categoría vacía",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Frijoles\",\r\n  \"descripcion\": \"Bolsa de umedio kilogramo\",\r\n  \"precio\": 1200,\r\n  \"cantidad\": 20,\r\n  \"categoria\": {\r\n    \"id\": 10000\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    ""
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Actualizar producto sin atributo categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Arroz ultra premium (por decir algo más)\",\r\n  \"descripcion\": \"Súper actualización (por decir... bueno... se entiende, ¿no?\",\r\n  \"precio\": 1800,\r\n  \"cantidad\": 35\r\n}"
+                },
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "1"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/1"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Actualizar producto con categoría inexistent",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Arroz ultra ultra premium (por decir algo)\",\r\n  \"descripcion\": \"Actualizado pero actualizado al 100%\",\r\n  \"precio\": 180000,\r\n  \"cantidad\": 3500,\r\n  \"categoria\": {\r\n    \"id\": 10\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "producto",
+                    "1"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/producto/1"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Actualizar producto inexistente",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Arroz dorado\",\r\n  \"descripcion\": \"Arroz... ¡pero dorado!\",\r\n  \"precio\": 15000000,\r\n  \"cantidad\": 1,\r\n  \"categoria\": {\r\n    \"id\": 1\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "producto",
+                    "100"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/producto/100"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Eliminar producto inexistente",
+              "request": {
+                "header": [],
+                "method": "DELETE",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "100"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/100"
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Producto error"
+        },
+        {
+          "item": [
+            {
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "name": "Reasignar una categoría",
+              "request": {
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "{{productoId}}",
+                    "categoria",
+                    "{{otraCategoriaId}}"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/{{productoId}}/categoria/{{otraCategoriaId}}"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Reasignar un producto",
+              "request": {
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    "{{categoriaId}}",
+                    "productos",
+                    "{{productoId}}"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/{{categoriaId}}/productos/{{productoId}}"
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Reasignación"
+        }
+      ],
+      "name": "SUPER-ADMIN-ROLE"
+    },
+    {
+      "auth": {
+        "bearer": [
+          {
+            "key": "token",
+            "type": "string",
+            "value": "{{userToken}}"
+          }
+        ],
+        "type": "bearer"
+      },
+      "item": [
+        {
+          "item": [
+            {
+              "name": "Listar categorías",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n    \"nombre\": \"Lacteos\",\r\n    \"descripcion\": \"Productos derivados de la leche\"\r\n}"
+                },
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Consultar categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n    \"nombre\": \"Lacteos\",\r\n    \"descripcion\": \"Productos derivados de la leche\"\r\n}"
+                },
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    "{{categoriaId}}"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/{{categoriaId}}"
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Categoría"
+        },
+        {
+          "item": [
+            {
+              "name": "Listar productos",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n    \"nombre\": \"Lacteos\",\r\n    \"descripcion\": \"Productos derivados de la leche\"\r\n}"
+                },
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Consultar producto",
+              "request": {
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Producto"
+        },
+        {
+          "item": [
+            {
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Categoría creada\", () => {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\nif (pm.response.code === 201) {\r\n    pm.collectionVariables.set(\r\n        \"categoriaId\",\r\n        pm.response.json().id\r\n    );\r\n}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "name": "Crear categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Granos\",\r\n  \"descripcion\": \"Arroz, frijoles y otros granos\"\r\n}"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    ""
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/"
+                }
+              },
+              "response": []
+            },
+            {
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Categoría creada\", () => {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\nif (pm.response.code === 201) {\r\n    pm.collectionVariables.set(\r\n        \"otraCategoriaId\",\r\n        pm.response.json().id\r\n    );\r\n}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "name": "Crear una segunda categoría (necesario para la carpeta Reasignación)",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Cereales\",\r\n  \"descripcion\": \"Granos de cereal\"\r\n}"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    ""
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Actualizar categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n    \"nombre\": \"Lacteos\",\r\n    \"descripcion\": \"Actualizado\"\r\n}"
+                },
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    "1"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/1"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Eliminar categoría",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n    \"nombre\": \"Lacteos\",\r\n    \"descripcion\": \"Productos derivados de la leche\"\r\n}"
+                },
+                "header": [],
+                "method": "DELETE",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    "2"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/2"
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Categoría admin (prohibido para el USER)"
+        },
+        {
+          "item": [
+            {
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Producto creado\", () => {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\nif (pm.response.code === 201) {\r\n    pm.collectionVariables.set(\r\n        \"productoId\",\r\n        pm.response.json().id\r\n    );\r\n}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "name": "Crear producto",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Arroz\",\r\n  \"descripcion\": \"Bolsa de un kilogramo\",\r\n  \"precio\": 1500,\r\n  \"cantidad\": 20,\r\n  \"categoria\": {\r\n    \"id\": 1\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    ""
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Actualizar producto",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\r\n  \"nombre\": \"Arroz premium (por decir algo)\",\r\n  \"descripcion\": \"Actualizado\",\r\n  \"precio\": 1800,\r\n  \"cantidad\": 35,\r\n  \"categoria\": {\r\n    \"id\": 1\r\n  }\r\n}"
+                },
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "1"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/1"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Eliminar producto",
+              "request": {
+                "header": [],
+                "method": "DELETE",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "1"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/1"
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Producto admin (prohibido para el USER)"
+        },
+        {
+          "item": [
+            {
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "name": "Reasignar una categoría",
+              "request": {
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "{{productoId}}",
+                    "categoria",
+                    "{{otraCategoriaId}}"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/productos/{{productoId}}/categoria/{{otraCategoriaId}}"
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Reasignar un producto",
+              "request": {
+                "header": [],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "categoria",
+                    "{{categoriaId}}",
+                    "productos",
+                    "{{productoId}}"
+                  ],
+                  "raw": "{{baseUrl}}/api/v1/categoria/{{categoriaId}}/productos/{{productoId}}"
+                }
+              },
+              "response": []
+            }
+          ],
+          "name": "Reasignación admin (prohibido para el USER)"
+        }
+      ],
+      "name": "USER"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "tokenAdmin",
+      "value": ""
+    },
+    {
+      "key": "tokenUser",
+      "value": ""
+    },
+    {
+      "key": "categoriaId",
+      "value": ""
+    },
+    {
+      "key": "productoId",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "userToken",
+      "value": ""
+    },
+    {
+      "key": "otraCategoriaId",
+      "value": ""
+    }
+  ]
+}
