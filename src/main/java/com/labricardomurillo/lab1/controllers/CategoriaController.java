@@ -32,21 +32,21 @@ public class CategoriaController {
         this.categoriaMapper = categoriaMapper;
     }
 
-    @PreAuthorize("hasAuthority('categoria:leer')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public List<CategoriaDTO> findAll() {
         log.info("Listando todos las categorías");
         return categoriaMapper.toDTOList(categoriaService.findAll());
     }
 
-    @PreAuthorize("hasAuthority('categoria:leer')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaDTO> findById(@PathVariable Long id) {
         log.info("Buscando categoría con id {}", id);
         return ResponseEntity.of(categoriaService.findById(id).map(categoriaMapper::toDTO));
     }
 
-    @PreAuthorize("hasAuthority('categoria:escribir')")
+    @PreAuthorize("hasRole('SUPER-ADMIN-ROLE')")
     @PostMapping("/")
     public ResponseEntity<CategoriaDTO> create(@RequestBody CategoriaDTO categoriaDTO) {
         log.info("Creando categoría");
@@ -58,14 +58,14 @@ public class CategoriaController {
         return ResponseEntity.created(location).body(categoriaMapper.toDTO(creado));
     }
 
-    @PreAuthorize("hasAuthority('categoria:escribir')")
+    @PreAuthorize("hasRole('SUPER-ADMIN-ROLE')")
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody CategoriaDTO categoriaDTO) {
         log.info("Actualizando categoría con id {}", id);
         return ResponseEntity.of(categoriaService.update(id, categoriaMapper.toEntity(categoriaDTO)).map(categoriaMapper::toDTO));
     }
 
-    @PreAuthorize("hasAuthority('categoria:eliminar')")
+    @PreAuthorize("hasRole('SUPER-ADMIN-ROLE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.info("Eliminando categoría con id {}", id);
@@ -74,17 +74,10 @@ public class CategoriaController {
                 : ResponseEntity.notFound().build();
     }
 
-    @PreAuthorize("hasAuthority('categoria:escribir')")
-    @PutMapping("/{id}/categoria/{categoriaId}")
+    @PreAuthorize("hasRole('SUPER-ADMIN-ROLE')")
+    @PutMapping("/{id}/productos/{productoId}")
     public ResponseEntity<CategoriaDTO> agregarProducto(@PathVariable Long id, @PathVariable Long productoId) {
         log.info("Asignando producto {} a la categoría {}", productoId, id);
         return ResponseEntity.of(categoriaService.agregarProducto(id, productoId).map(categoriaMapper::toDTO));
-    }
-
-    @PreAuthorize("hasAuthority('categoria:escribir')")
-    @DeleteMapping("/{id}/categoria/{categoriaId}")
-    public ResponseEntity<CategoriaDTO> quitarProducto(@PathVariable Long id, @PathVariable Long productoId) {
-        log.info("Quitando producto {} de la categoría {}", productoId, id);
-        return ResponseEntity.of(categoriaService.quitarProducto(id, productoId).map(categoriaMapper::toDTO));
     }
 }

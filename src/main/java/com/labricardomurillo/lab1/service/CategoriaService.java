@@ -1,6 +1,5 @@
 package com.labricardomurillo.lab1.service;
 
-import com.labricardomurillo.lab1.mappers.CategoriaMapper;
 import com.labricardomurillo.lab1.model.Categoria;
 import com.labricardomurillo.lab1.repository.CategoriaRepository;
 import com.labricardomurillo.lab1.repository.ProductoRepository;
@@ -16,12 +15,10 @@ import java.util.Optional;
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
-    private final CategoriaMapper categoriaMapper;
     private final ProductoRepository productoRepository;
 
-    public CategoriaService(CategoriaRepository categoriaRepository,  CategoriaMapper categoriaMapper, ProductoRepository productoRepository) {
+    public CategoriaService(CategoriaRepository categoriaRepository, ProductoRepository productoRepository) {
         this.categoriaRepository = categoriaRepository;
-        this.categoriaMapper = categoriaMapper;
         this.productoRepository = productoRepository;
     }
 
@@ -30,7 +27,7 @@ public class CategoriaService {
     }
 
     public Optional<Categoria> findById(Long id) {
-        log.info("Buscando duenno con id {}:", id);
+        log.info("Buscando categoría con id {}:", id);
         return categoriaRepository.findById(id);
     }
 
@@ -65,13 +62,4 @@ public class CategoriaService {
                     return categoria;
                 }));
     }
-
-    @Transactional
-    public Optional<Categoria> quitarProducto(Long categoriaId, Long productoId) {
-        return categoriaRepository.findById(categoriaId).map(categoria -> {
-            categoria.setProductos(null);
-            return categoriaRepository.save(categoria);
-        });
-    }
-
 }
