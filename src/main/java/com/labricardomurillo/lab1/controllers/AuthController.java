@@ -2,6 +2,8 @@ package com.labricardomurillo.lab1.controllers;
 
 import com.labricardomurillo.lab1.dto.LoginRequestDTO;
 import com.labricardomurillo.lab1.dto.LoginResponseDTO;
+import com.labricardomurillo.lab1.dto.RegistroRequestDTO;
+import com.labricardomurillo.lab1.dto.RegistroResponseDTO;
 import com.labricardomurillo.lab1.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,4 +22,7 @@ public class AuthController {
     public LoginResponseDTO login(@RequestBody LoginRequestDTO request) {
         return authService.login(request);
     }
+
+    @PostMapping("/registro")
+    public RegistroResponseDTO registro(@RequestBody RegistroRequestDTO request) { return authService.registro(request); }
 }
